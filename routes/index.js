@@ -3,6 +3,7 @@ const { login } = require('../controllers/Auth')
 const User = require('../controllers/User')
 const Customer = require('../controllers/Customer')
 const Inventory = require('../controllers/Inventory')
+const Transaction = require('../controllers/Transaction')
 
 const route = Router()
 
@@ -27,5 +28,11 @@ route.route('/inventory').post(Inventory.create)
 route.route('/inventory').put(Inventory.update)
 route.route('/inventory').delete(Inventory.remove)
 route.route('/inventory/scan').post(Inventory.scan)
+
+// Transaction
+route.route('/transaction').get(Transaction.show)
+route.route('/transaction').post(Transaction.create)
+route.route('/transaction').put(Transaction.cancel)
+route.route('/transaction/detail').post(Transaction.detail)
 
 module.exports = route
