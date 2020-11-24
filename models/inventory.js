@@ -32,13 +32,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         ]
     })
-    inventory.associate = function (models) {
-        inventory.hasMany(models.transaction_detail, {
-            as: 'items',
-            foreignKey: 'inventoryId',
-            onDelete: 'SET NULL'
-        })
-    }
     sequelizePaginate.paginate(inventory)
     return inventory;
 }

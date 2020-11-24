@@ -10,7 +10,8 @@ let sequelize;
 sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './db.sqlite',
-    logging: false
+    logging: false,
+    // timezone: '+07:00'
 });
 const models = process.cwd() + '/models/' || __dirname;
 fs

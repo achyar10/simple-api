@@ -21,7 +21,7 @@ const show = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const { userId, customerId, customer_name, customer_phone, pay_method, cash, items, hold } = req.body
+    const { userId, cashier, customerId, customer_name, customer_phone, pay_method, cash, items, hold } = req.body
     const trans = await model.sequelize.transaction();
     try {
         const fullNo = `#${moment().format('YYMMDD')}/${moment().format('HHmmss')}`
@@ -35,7 +35,7 @@ const create = async (req, res) => {
         const join = [{ model: model.transaction_detail, as: 'items' }]
         const saveTrans = await model.transaction.create({
             no_trans: fullNo,
-            userId, customerId, customer_name, customer_phone, pay_method, cash,
+            userId, cashier, customerId, customer_name, customer_phone, pay_method, cash,
             total_disc, total_qty, total_hpp, grand_total, hold, items
         }, { include: join, transaction: trans })
         let promises = []
