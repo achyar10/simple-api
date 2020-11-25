@@ -13,10 +13,10 @@ const show = async (req, res) => {
             order: [['id', 'DESC']]
         }
         const data = await model.transaction.paginate(opt)
-        return res.json(data)
+        return res.json({ status: true, message: 'OK', data })
     } catch (error) {
         console.log(error)
-        return res.status(500).json('Internal Server error')
+        return res.status(500).json({ status: false, message: 'Internal Server error' })
     }
 }
 
@@ -44,11 +44,11 @@ const create = async (req, res) => {
         })
         await Promise.all(promises)
         await trans.commit()
-        return res.json(saveTrans)
+        return res.json({ status: true, message: 'OK', data: saveTrans })
     } catch (error) {
         console.log(error)
         await trans.rollback()
-        return res.status(500).json('Internal Server error')
+        return res.status(500).json({ status: false, message: 'Internal Server error' })
     }
 }
 
@@ -70,12 +70,12 @@ const cancel = async (req, res) => {
                 })
             }
             Promise.all(promises)
-            return res.json('OK')
+            return res.json({ status: true, message: 'OK', data: {} })
         }
-        return res.status(404).json('Data tidak ditemukan!')
+        return res.json({ status: false, message: 'Data tidak ditemukan!' })
     } catch (error) {
         console.log(error)
-        return res.status(500).json('Internal Server error')
+        return res.status(500).json({ status: false, message: 'Internal Server error' })
     }
 }
 
@@ -88,12 +88,12 @@ const detail = async (req, res) => {
         }
         const data = await model.transaction.findOne(opt)
         if (data) {
-            return res.json(data)
+            return res.json({ status: true, message: 'OK', data })
         }
-        return res.status(404).json('Data not found!')
+        return res.json({ status: false, message: 'Data tidak ditemukan!' })
     } catch (error) {
         console.log(error)
-        return res.status(500).json('Internal Server error')
+        return res.status(500).json({ status: false, message: 'Internal Server error' })
     }
 }
 
